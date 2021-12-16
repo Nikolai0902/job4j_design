@@ -35,23 +35,24 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T newValue) {
-        T rsl = container[Objects.checkIndex(index, size)];
+        T rsl = get(index);
         container[index] = newValue;
         return rsl;
     }
 
     @Override
     public T remove(int index) {
-        T rsl = container[Objects.checkIndex(index, size)];
+        T rsl = get(index);
         System.arraycopy(container, index + 1, container, index, container.length - index - 1);
-        container[size] = null;
+        container[size - 1] = null;
         size--;
         return rsl;
     }
 
     @Override
     public T get(int index) {
-        return container[Objects.checkIndex(index, size)];
+        Objects.checkIndex(index, size);
+        return container[index];
     }
 
     @Override
