@@ -23,7 +23,26 @@ public class User {
     public String toString() {
         return "User{" + "name='" + name + '\''
                 + ", children=" + children
-                + ", birthday=" + sdf.format(birthday.getTime()) + '}';
+                + ", birthday=" + birthday.getTime() + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return children == user.children && Objects.equals(name, user.name)
+                && Objects.equals(birthday, user.birthday)
+                && Objects.equals(sdf, user.sdf);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday, sdf);
     }
 
     public static void main(String[] args) {
@@ -33,12 +52,14 @@ public class User {
 
         System.out.println(nik.hashCode());
         System.out.println(nikTwo.hashCode());
+        System.out.println(nik.equals(nikTwo));
 
         Map<User, Object> map = new HashMap<>();
 
         map.put(nik, new Object());
         map.put(nikTwo, new Object());
 
+        System.out.println(map);
         System.out.println(map);
     }
 }
