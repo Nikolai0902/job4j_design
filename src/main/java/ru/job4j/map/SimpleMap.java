@@ -17,19 +17,18 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if (count / capacity >= LOAD_FACTOR) {
+        if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
         int hashCode = key.hashCode();
         int hash = hash(hashCode);
         int index = indexFor(hash);
-        boolean result = true;
+        boolean result = false;
         if (table[index] == null) {
             table[index] = new MapEntry<>(key, value);
             modCount++;
             count++;
-        } else if (table[index].key.hashCode() == hashCode && table[index].key.equals(key)) {
-            result = false;
+            result = true;
         }
         return result;
     }
@@ -39,7 +38,7 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
     }
 
     private int indexFor(int hash) {
-        return hash & (table.length - 1);
+        return hash & (capacity - 1);
     }
 
     private void expand() {
@@ -70,15 +69,15 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
         int hashCode = key.hashCode();
         int hash = hash(hashCode);
         int index = indexFor(hash);
-        boolean rsl = table[index] != null
+        boolean result = table[index] != null
                 && table[index].key.hashCode() == hashCode
                 && table[index].key.equals(key);
-        if (rsl) {
+        if (result) {
             table[index] = null;
             modCount++;
             count--;
         }
-        return rsl;
+        return result;
     }
 
     @Override
@@ -93,15 +92,10 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                boolean result = false;
-                    for (int i = point; i < table.length; i++) {
-                        if (table[i] != null) {
-                            point = i;
-                            result = true;
-                            break;
-                        }
+                    while (point < table.length && table[point] == null) {
+                        point++;
                     }
-                return result;
+                    return point < table.length;
             }
 
             @Override
