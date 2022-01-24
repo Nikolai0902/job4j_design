@@ -17,13 +17,9 @@ public class SimpleMapTest {
     @Test
     public void whenPut() {
         SimpleMap<String, Integer> map = new SimpleMap<>();
-        map.put("Nik", 2);
-        map.put("Nik", 4);
-        map.put("Bim", 7);
-        map.put("Bim", 3);
-        map.put("Mike", null);
-        assertThat(map.get("Nik"), is(4));
-        assertThat(map.get("Bim"), is(3));
+        assertTrue(map.put("Nik", 2));
+        assertFalse(map.put("Nik", 3));
+        assertThat(map.get("Nik"), is(2));
     }
 
     @Test
@@ -95,7 +91,7 @@ public class SimpleMapTest {
         Iterator<String> iterator = map.iterator();
         Assert.assertTrue(iterator.hasNext());
         iterator.next();
-        map.put("Bim", 3);
+        map.remove("Nik");
         iterator.next();
     }
 

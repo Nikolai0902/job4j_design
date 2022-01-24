@@ -17,21 +17,21 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        int h = key.hashCode();
-        int hash = hash(h);
-        int i = indexFor(hash);
-        if ((float) count >= LOAD_FACTOR * (float) capacity) {
+        if (count / capacity >= LOAD_FACTOR) {
             expand();
         }
-        if (table[i] == null) {
-            table[i] = new MapEntry<>(key, value);
+        int hashCode = key.hashCode();
+        int hash = hash(hashCode);
+        int index = indexFor(hash);
+        boolean result = true;
+        if (table[index] == null) {
+            table[index] = new MapEntry<>(key, value);
             modCount++;
             count++;
-        } else if (table[i].key.hashCode() == h && table[i].key.equals(key)) {
-            table[i].value = value;
-            modCount++;
+        } else if (table[index].key.hashCode() == hashCode && table[index].key.equals(key)) {
+            result = false;
         }
-        return table[i].key.hashCode() == h && table[i].key.equals(key);
+        return result;
     }
 
     private int hash(int hashCode) {
@@ -48,8 +48,8 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
         MapEntry<K, V>[] tableNew = new MapEntry[capacity];
         for (MapEntry<K, V> el : tableOld) {
             if (el != null) {
-                int h = el.key.hashCode();
-                int hash = hash(h);
+                int hashCode = el.key.hashCode();
+                int hash = hash(hashCode);
                 int index = indexFor(hash);
                 tableNew[index] = el;
             }
@@ -59,18 +59,22 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
 
     @Override
     public V get(K key) {
-        int i = indexFor(hash(key.hashCode()));
-        return table[i] == null ? null : table[i].value;
+        int index = indexFor(hash(key.hashCode()));
+        return table[index] != null
+                && table[index].key.hashCode() == key.hashCode()
+                && table[index].key.equals(key) ? table[index].value : null;
     }
 
     @Override
     public boolean remove(K key) {
-        int h = key.hashCode();
-        int hash = hash(h);
-        int i = indexFor(hash);
-        boolean rsl = table[i] != null && table[i].key.hashCode() == h && table[i].key.equals(key);
+        int hashCode = key.hashCode();
+        int hash = hash(hashCode);
+        int index = indexFor(hash);
+        boolean rsl = table[index] != null
+                && table[index].key.hashCode() == hashCode
+                && table[index].key.equals(key);
         if (rsl) {
-            table[i] = null;
+            table[index] = null;
             modCount++;
             count--;
         }
@@ -86,22 +90,24 @@ public class SimpleMap<K, V> implements MapAbs<K, V> {
 
             @Override
             public boolean hasNext() {
-                for (int i = point; i < table.length; i++) {
-                    if (table[i] != null) {
-                        point = i;
-                        return true;
-                    }
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
                 }
-                return false;
+                boolean result = false;
+                    for (int i = point; i < table.length; i++) {
+                        if (table[i] != null) {
+                            point = i;
+                            result = true;
+                            break;
+                        }
+                    }
+                return result;
             }
 
             @Override
             public K next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                }
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
                 }
                 return table[point++].key;
             }
