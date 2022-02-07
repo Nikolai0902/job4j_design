@@ -17,14 +17,20 @@ public class Config {
     }
 
     public void load() {
-            toString().lines().filter(s -> s.contains("="))
-                    .map(n -> n.trim().split("=", 2))
-                    .forEach(r -> {
-                        if (r[0].isEmpty() || r[1].isEmpty()) {
-                            throw new IllegalArgumentException("Ошибка данных");
-                        }
-                        values.put(r[0], r[1]);
-                    });
+        toString().lines()
+                .filter(s -> {
+                    if (!s.contains("=") && !s.contains("#") || s.contains("==")) {
+                        throw new IllegalArgumentException("Ошибка данных");
+                    }
+                    return s.contains("=");
+                })
+                .map(n -> n.trim().split("=", 2))
+                .forEach(r -> {
+                    if (r[0].isEmpty() || r[1].isEmpty()) {
+                        throw new IllegalArgumentException("Ошибка данных");
+                    }
+                    values.put(r[0], r[1]);
+                });
     }
 
     public String value(String key) {

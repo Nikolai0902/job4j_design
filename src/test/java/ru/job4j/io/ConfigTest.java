@@ -26,8 +26,29 @@ public class ConfigTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void whenPairWithExc() {
+    public void whenPairWithExc1() {
         String path = "./data/pair_with_exception.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenPairWithExc2() {
+        String path = "./data/pair_with_exception_2.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenPairWithExc3() {
+        String path = "./data/pair_with_exception_3.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenPairWithExc4() {
+        String path = "./data/pair_with_exception_4.properties";
         Config config = new Config(path);
         config.load();
     }
