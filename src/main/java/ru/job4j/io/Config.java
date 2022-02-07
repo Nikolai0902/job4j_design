@@ -18,6 +18,7 @@ public class Config {
 
     public void load() {
         toString().lines()
+                .filter(l -> !l.equals(""))
                 .filter(s -> {
                     if (!s.contains("=") && !s.contains("#") || s.contains("==")) {
                         throw new IllegalArgumentException("Ошибка данных");
