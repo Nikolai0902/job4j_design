@@ -18,20 +18,17 @@ public class Config {
 
     public void load() {
         toString().lines()
-                .filter(l -> !l.equals(""))
+                .filter(k -> !k.startsWith(" ") || !k.endsWith(" "))
+                .filter(l -> !l.isEmpty())
+                .filter(l -> !l.startsWith("#"))
                 .filter(s -> {
-                    if (!s.contains("=") && !s.contains("#") || s.contains("==")) {
+                    if (!s.contains("=") || s.startsWith("=") || s.endsWith("=")) {
                         throw new IllegalArgumentException("Ошибка данных");
                     }
-                    return s.contains("=");
+                    return true;
                 })
-                .map(n -> n.trim().split("=", 2))
-                .forEach(r -> {
-                    if (r[0].isEmpty() || r[1].isEmpty()) {
-                        throw new IllegalArgumentException("Ошибка данных");
-                    }
-                    values.put(r[0], r[1]);
-                });
+                .map(n -> n.split("=", 2))
+                .forEach(r -> values.put(r[0], r[1]));
     }
 
     public String value(String key) {

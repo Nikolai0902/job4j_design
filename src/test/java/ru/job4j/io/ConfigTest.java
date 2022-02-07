@@ -46,10 +46,11 @@ public class ConfigTest {
         config.load();
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void whenPairWithExc4() {
         String path = "./data/pair_with_exception_4.properties";
         Config config = new Config(path);
         config.load();
+        assertThat(config.value("v"), is("=1"));
     }
 }
