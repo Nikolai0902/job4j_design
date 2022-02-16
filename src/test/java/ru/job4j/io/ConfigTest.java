@@ -53,4 +53,12 @@ public class ConfigTest {
         config.load();
         assertThat(config.value("v"), is("=1"));
     }
+
+    @Test
+    public void whenPairWithExc5() {
+        String path = "./data/pair_with_exception_5.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("v"), is("q="));
+    }
 }

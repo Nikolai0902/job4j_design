@@ -22,7 +22,8 @@ public class Config {
                 .filter(l -> !l.isEmpty())
                 .filter(l -> !l.startsWith("#"))
                 .filter(s -> {
-                    if (!s.contains("=") || s.startsWith("=") || s.endsWith("=")) {
+                    if (!s.contains("=") || s.startsWith("=") || ((s.split("=").length < 2)
+                            || ((s.split("\\.", -1).length - 1 == 1) && (s.endsWith("="))))) {
                         throw new IllegalArgumentException("Ошибка данных");
                     }
                     return true;
