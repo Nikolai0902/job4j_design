@@ -15,9 +15,9 @@ public class AnalizyTest {
 
     @Test
     public void drop() throws IOException {
-        File source = folder.newFile("source.txt");
+        File sourceIn = folder.newFile("source.txt");
         File target = folder.newFile("target.txt");
-        try (PrintWriter out = new PrintWriter(source)) {
+        try (PrintWriter out = new PrintWriter(sourceIn)) {
             out.println("200 10:56:01\n"
                     + "500 10:57:01\n"
                     + "400 10:58:01\n"
@@ -26,7 +26,7 @@ public class AnalizyTest {
                     + "200 11:02:08");
         }
         Analizy result = new Analizy();
-        result.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
+        result.unavailable(sourceIn.getAbsolutePath(), target.getAbsolutePath());
         StringBuilder rsl = new StringBuilder();
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {
             in.lines().forEach(rsl::append);
