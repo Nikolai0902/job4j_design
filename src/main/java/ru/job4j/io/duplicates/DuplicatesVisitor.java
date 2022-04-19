@@ -9,21 +9,21 @@ import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
-    private Map<FileProperty, Path> files = new HashMap<>();
-    private List<FileProperty> dup = new ArrayList<>();
+    private Map<FileProperty, List<Path>> files = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fileProperty = new FileProperty(file.toFile().length(), file.toFile().getName());
-        if (!files.containsKey(fileProperty)) {
-            files.put(fileProperty, file);
-        } else {
-            dup.add(fileProperty);
+        List<Path> f = new ArrayList<>();
+        f.add(file);
+        if (files.containsKey(fileProperty)) {
+            files.get(fileProperty).add(file);
         }
+        files.putIfAbsent(fileProperty, f);
         return super.visitFile(file, attrs);
     }
 
-    public List<FileProperty> getFile() {
-        return dup;
+    public Map<FileProperty, List<Path>> result() {
+        return files;
     }
 }
