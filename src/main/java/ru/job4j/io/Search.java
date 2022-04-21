@@ -17,8 +17,8 @@ public class Search {
     }
 
     private static void valid(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        if (args.length != 2) {
+            throw new IllegalArgumentException("enter all parameters");
         }
         if (!Files.isDirectory(Path.of(args[0]))) {
             throw new IllegalArgumentException("parameter is not a dirrectory");
