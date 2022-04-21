@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,9 +16,9 @@ public class Search {
         search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
-    public static void valid(String[] args) {
-        if (args.length < 2) {
-            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+    private static void valid(String[] args) {
+        if (!Files.isDirectory(Path.of(args[0])) || !args[1].startsWith(".")) {
+            throw new IllegalArgumentException("format of the parameters is incorrect");
         }
     }
 
