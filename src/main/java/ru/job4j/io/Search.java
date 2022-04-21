@@ -17,8 +17,14 @@ public class Search {
     }
 
     private static void valid(String[] args) {
-        if (!Files.isDirectory(Path.of(args[0])) || !args[1].startsWith(".")) {
-            throw new IllegalArgumentException("format of the parameters is incorrect");
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
+        }
+        if (!Files.isDirectory(Path.of(args[0]))) {
+            throw new IllegalArgumentException("parameter is not a dirrectory");
+        }
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException("format file of the parameters is incorrect");
         }
     }
 
