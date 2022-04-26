@@ -34,4 +34,14 @@ public class ArgsNameTest {
     public void whenWrongSomeArgument() {
         ArgsName jvm = ArgsName.of(new String[] {"-encoding=UTF-8", "-Xmx="});
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenNotArgumentDash() {
+        ArgsName jvm = ArgsName.of(new String[] {"encoding=UTF8", "Xmx=512"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenNotKey() {
+        ArgsName jvm = ArgsName.of(new String[] {"=UTF8", "-Xmx=512"});
+    }
 }

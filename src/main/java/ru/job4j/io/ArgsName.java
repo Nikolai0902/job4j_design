@@ -9,17 +9,25 @@ public class ArgsName {
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) {
-        if (!values.containsKey(key)) {
-            throw new IllegalArgumentException("Ошибка данных");
-        }
+        validKey(key);
         return values.get(key);
+    }
+
+    private void validKey(String key) {
+        if (!values.containsKey(key)) {
+            throw new IllegalArgumentException("key does not exist");
+        }
+    }
+
+    private void validSplit(String string) {
+        if (string.split("=").length < 2 || !string.startsWith("-") || string.startsWith("=")) {
+            throw new IllegalArgumentException("Data error");
+        }
     }
 
     private void parse(String[] args) {
         for (String string : args) {
-            if (string.split("=").length < 2) {
-                throw new IllegalArgumentException("Ошибка данных");
-            }
+            validSplit(string);
             String[] splitStr = Arrays.stream(string.split("([-=])", 3))
                     .filter(str -> !str.isEmpty()).toArray(String[]::new);
             values.put(splitStr[0], splitStr[1]);
