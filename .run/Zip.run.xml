@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Zip" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ru.job4j.io.Zip" />
+    <module name="job4j_design" />
+    <option name="PROGRAM_PARAMETERS" value="-d=C:\projects\primer -e=.js -o=project.zip" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
