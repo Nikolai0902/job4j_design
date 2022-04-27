@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -10,11 +11,11 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
 
-    public void packFiles(List<File> sources, File target) {
+    public void packFiles(List<Path> sources, File target) {
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            for (File file : sources) {
-                zip.putNextEntry(new ZipEntry(file.getPath()));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(file))) {
+            for (Path file : sources) {
+                zip.putNextEntry(new ZipEntry(file.toString()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(file.toString()))) {
                     zip.write(out.readAllBytes());
                 }
             }
@@ -23,43 +24,29 @@ public class Zip {
         }
     }
 
-    private static List<File> searchFile(Path filePath, String exclude) {
-        List<Path> listPaths = new ArrayList<>();
-        try {
-            listPaths = Search.search(filePath,
-                    p -> !p.toFile()
-                            .getName()
-                            .endsWith(exclude));
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static void valid(ArgsName argsName) {
+        if (!Files.isDirectory(Paths.get(argsName.get("d")))) {
+            throw new IllegalArgumentException("parameter is not a dirrectory");
         }
-        List<File> listFiles = new ArrayList<>();
-        for (Path path : listPaths) {
-            listFiles.add(path.toFile());
+        if (!argsName.get("e").startsWith(".class")) {
+            throw new IllegalArgumentException("incorrect file extension");
         }
-        return listFiles;
-    }
-
-    public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!Files.exists(Paths.get(argsName.get("o")))) {
+            throw new IllegalArgumentException("zip file with this name does not exist");
         }
     }
 
-    public static void main(String[] args) {
-        Zip zip = new Zip();
+    public static void main(String[] args) throws IOException {
         if (args.length != 3) {
-            throw new IllegalArgumentException(
-                    "Data error");
+            throw new IllegalArgumentException("enter all parameters");
         }
+        Zip zip = new Zip();
         ArgsName argsName = ArgsName.of(args);
+        valid(argsName);
         Path root = Paths.get(argsName.get("d"));
-        zip.packFiles(searchFile(root, argsName.get("e")),
+        zip.packFiles((Search.search(root, p -> !p.toFile()
+                .getName()
+                .endsWith(argsName.get("e")))),
                 new File(argsName.get("o")));
     }
 }
