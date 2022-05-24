@@ -21,19 +21,20 @@ public class ConsoleChat {
     public void run() {
         String str = "";
         boolean flag = true;
+        List<String> phrases = readPhrases();
         List<String> log = new ArrayList<>();
         while (!OUT.equals(str)) {
             System.out.println("Введите фразу: ");
             str = scanner.nextLine();
             log.add(str);
-            if (str.equals(STOP)) {
+            if (STOP.equals(str)) {
                 flag = false;
             }
-            if (str.equals(CONTINUE)) {
+            if (CONTINUE.equals(str)) {
                 flag = true;
             }
-            if (!str.equals(OUT) && !str.equals(STOP) && flag) {
-                String bot = readPhrases().get(random.nextInt(readPhrases().size()));
+            if (!OUT.equals(str) && !STOP.equals(str) && flag) {
+                String bot = phrases.get(random.nextInt(phrases.size()));
                 System.out.println(bot);
                 log.add(bot);
             }
