@@ -19,9 +19,6 @@ public class CSVReader {
         List<String> tableHead = Arrays.asList(stringsHead);
         StringBuilder output = new StringBuilder();
         output.append(addLine(filter, stringsHead, tableHead)).append(System.lineSeparator());
-        if ("stdout".equals(argsName.get("out"))) {
-            filter = List.of("name", "age");
-        }
         while (scanner.hasNext()) {
             String[] strings = scanner.next().split(del);
             output.append(addLine(filter, strings, tableHead));
