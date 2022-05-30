@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -10,51 +11,36 @@ public class CSVReader {
 
     public static void handle(ArgsName argsName) throws Exception {
         valid(argsName);
-        String del = argsName.get("delimiter");
-        StringBuilder output = new StringBuilder();
-        List<Integer> indexFilter = searchIndex(argsName);
-        if (argsName.get("out").equals("stdout")) {
-            indexFilter = List.of(0, 1);
-        }
         var scanner = new Scanner(new BufferedInputStream(new FileInputStream(argsName.get("path"))))
                 .useDelimiter(System.lineSeparator());
+        String del = argsName.get("delimiter");
+        String[] stringsHead = scanner.next().split(del);
+        List<String> filter = Arrays.asList(argsName.get("filter").split(","));
+        List<String> tableHead = Arrays.asList(stringsHead);
+        StringBuilder output = new StringBuilder();
+        output.append(addLine(filter, stringsHead, tableHead)).append(System.lineSeparator());
+        if ("stdout".equals(argsName.get("out"))) {
+            filter = List.of("name", "age");
+        }
         while (scanner.hasNext()) {
-            String[] split = scanner.next().split(del);
-            for (int indexF = 0; indexF < indexFilter.size(); indexF++) {
-                for (int indexSplit = 0; indexSplit < split.length; indexSplit++) {
-                    if (indexFilter.get(indexF) == indexSplit) {
-                        output.append(split[indexSplit]).append(";");
-                    }
-                }
-            }
-            output.setLength(output.length() - 1);
+            String[] strings = scanner.next().split(del);
+            output.append(addLine(filter, strings, tableHead));
             output.append(System.lineSeparator());
         }
         print(argsName, output);
     }
 
-    private static List<Integer> searchIndex(ArgsName argsName) {
-        String[] filter = argsName.get("filter").split(",");
-        List<Integer> indexFilter = new ArrayList<>();
-            for (String value : filter) {
-                if (value.equals("name")) {
-                    indexFilter.add(0);
-                }
-                if (value.equals("age")) {
-                    indexFilter.add(1);
-                }
-                if (value.equals("last_name")) {
-                    indexFilter.add(2);
-                }
-                if (value.equals("education")) {
-                    indexFilter.add(3);
-                }
-            }
-        return indexFilter;
+    private static StringBuilder addLine(List<String> filter, String[] strings, List<String> tableHead) {
+        StringBuilder line = new StringBuilder();
+        for (int i = 0; i < filter.size(); i++) {
+            line.append(strings[tableHead.indexOf(filter.get(i))]).append(";");
+        }
+        line.setLength(line.length() - 1);
+        return line;
     }
 
     private static void print(ArgsName argsName, StringBuilder output) {
-        if (argsName.get("out").equals("stdout")) {
+        if ("stdout".equals(argsName.get("out"))) {
             System.out.println(output);
         } else {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(argsName.get("out")))) {
@@ -73,5 +59,9 @@ public class CSVReader {
         if (!";".equals(args.get("delimiter"))) {
             throw new IllegalArgumentException("delimiter invalid values");
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        handle(ArgsName.of(args));
     }
 }
