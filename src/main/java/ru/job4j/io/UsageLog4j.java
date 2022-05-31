@@ -9,6 +9,7 @@ public class UsageLog4j {
 
     public static void main(String[] args) {
         String name = "Petr Arsentev";
+        byte speed = 15;
         int age = 33;
         short place = 1;
         double weight = 80.5;
@@ -16,7 +17,7 @@ public class UsageLog4j {
         boolean run = true;
         long km = 9L;
         char symbol = 55;
-        LOG.debug("User info name : {}, age : {}, place : {}, weight : {}, height : {}, run : {}, km : {}, symbol : {}",
-                name, age, place, weight, height, run, km, symbol);
+        LOG.debug("User info name : {}, speed : {}, age : {}, place : {}, weight : {}, height : {}, run : {}, km : {}, symbol : {}",
+                name, speed, age, place, weight, height, run, km, symbol);
     }
 }
