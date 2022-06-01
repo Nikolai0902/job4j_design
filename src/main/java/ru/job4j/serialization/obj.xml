@@ -1,0 +1,8 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<house target="false" rooms="3" street="Red">
+    <owner name="Ivan" surename="Ivanov" date="01.02.1990"/>
+    <systemSafes>
+        <systemSafe>Worker</systemSafe>
+        <systemSafe>Married</systemSafe>
+    </systemSafes>
+</house>
