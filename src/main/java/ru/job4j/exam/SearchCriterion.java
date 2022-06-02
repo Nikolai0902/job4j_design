@@ -25,7 +25,7 @@ public class SearchCriterion {
 
     private static void valid(ArgsName argsName, String[] args) {
         if (args.length != 4) {
-            throw new IllegalArgumentException("enter all parameters");
+            throw new IllegalArgumentException("enter all parameters file");
         }
         if (!Files.isDirectory(Paths.get(argsName.get("d")))) {
             throw new IllegalArgumentException("parameter is not a directory");
