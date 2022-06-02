@@ -35,7 +35,12 @@ public class SearchCriterion {
     public static List<Path> search(Path root, ArgsName argsName) throws IOException {
         Predicate<Path> condition = null;
         if ("mask".equals(argsName.get("t"))) {
-            condition = p -> p.toFile().getName().endsWith(argsName.get("n").replace("*", ""));
+            Pattern pattern = Pattern.compile(argsName.get("n")
+                    .replace("*", ".*")
+                    .replace(".", "[.]")
+                    .replace("?", ".")
+            );
+            condition = p -> (pattern.matcher(p.toFile().getName())).find();
         } else if ("name".equals(argsName.get("t"))) {
             condition = p -> p.toFile().getName().equals(argsName.get("n"));
         } else if ("regex".equals(argsName.get("t"))) {
