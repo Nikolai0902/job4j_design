@@ -1,6 +1,5 @@
 package ru.job4j.serialization.xml;
 
-
 import ru.job4j.serialization.json.Owner;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;

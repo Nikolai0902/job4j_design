@@ -21,7 +21,7 @@ public class Search {
             throw new IllegalArgumentException("enter all parameters");
         }
         if (!Files.isDirectory(Path.of(args[0]))) {
-            throw new IllegalArgumentException("parameter is not a dirrectory");
+            throw new IllegalArgumentException("parameter is not a directory");
         }
         if (!args[1].startsWith(".")) {
             throw new IllegalArgumentException("format file of the parameters is incorrect");
