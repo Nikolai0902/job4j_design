@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class SearchCriterion {
 
@@ -33,10 +34,13 @@ public class SearchCriterion {
 
     public static List<Path> search(Path root, ArgsName argsName) throws IOException {
         Predicate<Path> condition = null;
-        if ("mask".equals(argsName.get("t")) || "regex".equals(argsName.get("t"))) {
-            condition = p -> p.toFile().getName().contains(argsName.get("n"));
+        if ("mask".equals(argsName.get("t"))) {
+            condition = p -> p.toFile().getName().endsWith(argsName.get("n").replace("*", ""));
         } else if ("name".equals(argsName.get("t"))) {
             condition = p -> p.toFile().getName().equals(argsName.get("n"));
+        } else if ("regex".equals(argsName.get("t"))) {
+            Pattern pattern = Pattern.compile(argsName.get("n"));
+            condition = p -> (pattern.matcher(p.toFile().getName())).find();
         }
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
