@@ -36,8 +36,8 @@ public class SearchCriterion {
         Predicate<Path> condition = null;
         if ("mask".equals(argsName.get("t"))) {
             Pattern pattern = Pattern.compile(argsName.get("n")
-                    .replace("*", ".*")
                     .replace(".", "[.]")
+                    .replace("*", ".*")
                     .replace("?", ".")
             );
             condition = p -> (pattern.matcher(p.toFile().getName())).find();
