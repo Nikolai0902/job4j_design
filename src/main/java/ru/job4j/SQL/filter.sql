@@ -43,8 +43,7 @@ values('жирное', 3, '2022-05-05', 800);
 --4. Написать запрос, который выводит самый дорогой продукт.
  SELECT name, price
  FROM product
- ORDER BY price DESC
- limit(1);
+ where price = (select max(price) from product);
  
  --5. Написать запрос, который выводит для каждого типа количество продуктов к нему принадлежащих.
  SELECT p.name "имя_типа", count(*)
