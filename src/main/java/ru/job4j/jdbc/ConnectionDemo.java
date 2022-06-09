@@ -9,15 +9,13 @@ import java.sql.SQLException;
 
 public class ConnectionDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
-        String url = "jdbc:postgresql://localhost:5432/idea_db";
-        String login = "postgres";
-        String password = "password";
         Config config = new Config("app.properties");
+        config.load();
+        Class.forName(config.value("hibernate.connection.driver_class"));
         try (Connection connection = DriverManager.getConnection(
-                config.value("url"),
-                config.value("login"),
-                config.value("password")
+                config.value("hibernate.connection.url"),
+                config.value("hibernate.connection.username"),
+                config.value("hibernate.connection.password")
         )) {
             DatabaseMetaData metaData = connection.getMetaData();
             System.out.println(metaData.getUserName());
