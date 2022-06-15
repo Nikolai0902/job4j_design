@@ -25,15 +25,9 @@ public class ImportDB {
             rd
                     .lines()
                     .map(s -> s.split(";"))
-                    .filter(k -> {
-                        if (k.length != 2) {
-                            throw new IllegalArgumentException("Ошибка данных");
-                        }
-                        return true;
-                    })
                     .filter(t -> {
-                        if (t[0].isBlank() || t[1].isBlank()) {
-                            throw new IllegalArgumentException("Одно из значений отсутсвует");
+                        if (t.length != 2 || t[0].isBlank() || t[1].isBlank()) {
+                            throw new IllegalArgumentException("Ошибка данных");
                         }
                         return true;
                     })
