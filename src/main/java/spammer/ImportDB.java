@@ -25,7 +25,12 @@ public class ImportDB {
             rd
                     .lines()
                     .map(s -> s.split(";"))
-                    .filter(s -> s.length >= 1)
+                    .filter(k -> {
+                        if ("".equals(k[0]) || k.length <= 1) {
+                            throw new IllegalArgumentException("Ошибка данных");
+                        }
+                        return true;
+                    })
                     .map(s -> new User(s[0], s[1]))
                     .forEach(users::add);
         }
@@ -40,7 +45,7 @@ public class ImportDB {
                 cfg.getProperty("jdbc.password")
         )) {
             for (User user : users) {
-                try (PreparedStatement ps = cnt.prepareStatement("insert into users ...")) {
+                try (PreparedStatement ps = cnt.prepareStatement("insert into users(name, email) values (?, ?)")) {
                     ps.setString(1, user.name);
                     ps.setString(2, user.email);
                     ps.execute();
