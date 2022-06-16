@@ -42,6 +42,13 @@ public class TableEditor implements AutoCloseable {
         );
     }
 
+    /**
+     * Для загрузки настроек используется ClassLoader, который будет искать файлы по названию
+     * именно в папке src/main/resources.
+     * TableEditor в try with resources, чтобы созданное подключение в конце закрывалось.
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         Properties config = new Properties();
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
