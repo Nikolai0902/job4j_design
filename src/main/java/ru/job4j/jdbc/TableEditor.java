@@ -1,9 +1,5 @@
 package ru.job4j.jdbc;
 
-import ru.job4j.io.Config;
-
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
@@ -14,8 +10,8 @@ public class TableEditor implements AutoCloseable {
 
     private static Properties properties;
 
-    public TableEditor(Properties properties) throws Exception {
-        this.properties = properties;
+    public TableEditor(Properties properties) {
+        TableEditor.properties = properties;
         initConnection();
     }
 
@@ -66,41 +62,31 @@ public class TableEditor implements AutoCloseable {
     }
 
 
-    public void createTable(String tableName) throws Exception {
-        String sql = String.format(
-                "create table " + tableName + "();"
-        );
+    public void createTable(String tableName) {
+        var sql = "create table " + tableName + "();";
         executeQuery(sql);
     }
 
-    public void dropTable(String tableName) throws Exception {
-        String sql = String.format(
-                "DROP TABLE " + tableName + ";"
-        );
+    public void dropTable(String tableName) {
+        var sql = "DROP TABLE " + tableName + ";";
         executeQuery(sql);
     }
 
-    public void addColumn(String tableName, String columnName, String type) throws Exception {
-        String sql = String.format(
-                "ALTER TABLE " + tableName
-                        + " ADD " + columnName + " " + type + ";"
-        );
+    public void addColumn(String tableName, String columnName, String type) {
+        var sql = "ALTER TABLE " + tableName
+                + " ADD " + columnName + " " + type + ";";
         executeQuery(sql);
     }
 
-    public void dropColumn(String tableName, String columnName) throws Exception {
-        String sql = String.format(
-                "ALTER TABLE " + tableName
-                        + " DROP COLUMN " + columnName + ";"
-        );
+    public void dropColumn(String tableName, String columnName) {
+        var sql = "ALTER TABLE " + tableName
+                + " DROP COLUMN " + columnName + ";";
         executeQuery(sql);
     }
 
-    public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
-        String sql = String.format(
-                "ALTER TABLE " + tableName
-                        + " RENAME COLUMN " + columnName + " TO " + newColumnName + ";"
-        );
+    public void renameColumn(String tableName, String columnName, String newColumnName) {
+        var sql = "ALTER TABLE " + tableName
+                + " RENAME COLUMN " + columnName + " TO " + newColumnName + ";";
         executeQuery(sql);
     }
 
