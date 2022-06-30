@@ -43,7 +43,7 @@ public class CinemaTest {
     }
 
     @Ignore
-    @Test (expected = FileNotFoundException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void whenBuyExp() {
         Account accountOne = new AccountCinema();
         Account accountTwo = new AccountCinema();
@@ -52,5 +52,25 @@ public class CinemaTest {
         date.set(2020, NOVEMBER, 10, 23, 0);
         cinema.buy(accountOne, 1, 1, date);
         cinema.buy(accountTwo, 1, 1, date);
+    }
+
+    @Ignore
+    @Test (expected = IllegalArgumentException.class)
+    public void whenBuyExpDisabledPlace() {
+        Account accountOne = new AccountCinema();
+        Cinema cinema = new Cinema3D();
+        Calendar date = getInstance();
+        date.set(2020, NOVEMBER, 10, 23, 0);
+        cinema.buy(accountOne, 100, 100, date);
+    }
+
+    @Ignore
+    @Test (expected = IllegalArgumentException.class)
+    public void whenBuyExpNotWorkingDate() {
+        Account accountOne = new AccountCinema();
+        Cinema cinema = new Cinema3D();
+        Calendar date = getInstance();
+        date.set(2020, NOVEMBER, 12, 23, 0);
+        cinema.buy(accountOne, 2, 2, date);
     }
 }
