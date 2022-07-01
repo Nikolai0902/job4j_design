@@ -1,19 +1,25 @@
 package ru.job4j.solid;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import ru.job4j.collection.list.List;
+import ru.job4j.question.User;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
- * Нарушение принципа SRP.
- * Соединение происходит с определенным драйвером и localHost
- * которое может поменяться.
- * Для загрузки настроек нужно использовать Properties.
+ * Шаблон проектирования, который нарушает SRP.
+ * Преобразование в формат есть преобразование, которое может поменяться.
  */
 public class Class3 {
 
-    public Connection buildConnection() throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/someDb?characterEncoding=UTF-8&characterSetResults=UTF-8&serverTimezone=UTC", "user01", "12345qwert");
-        return connection;
+    public String printFormat(List<User> list) {
+        StringBuilder text = new StringBuilder();
+        text.append("Стобец1; Стобец1;");
+        for (User i : list) {
+            text.append(i.getId())
+                    .append(i.getName())
+                    .append(new SimpleDateFormat("dd MMM yyy GG").format(new Date().getTime()));
+        }
+        return text.toString();
     }
 }

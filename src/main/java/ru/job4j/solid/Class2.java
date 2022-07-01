@@ -1,12 +1,13 @@
 package ru.job4j.solid;
 
+import ru.job4j.collection.list.List;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
  * Нарушение принципа SRP.
- * Класс умеет их создавать и инициализировать.
- * Должен быть конструктор с инициализацией дирекктории.
+ * Модель данных с лишней логикой.
  */
 public class Class2 {
     protected String load(String key) {
@@ -17,5 +18,11 @@ public class Class2 {
             throw new IllegalArgumentException();
         }
         return result;
+    }
+
+    public void print(List<String> list) {
+        for (String listString : list) {
+           System.out.println(listString);
+        }
     }
 }
