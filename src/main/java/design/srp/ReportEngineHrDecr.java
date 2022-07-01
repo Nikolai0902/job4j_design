@@ -1,5 +1,7 @@
 package design.srp;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -18,7 +20,9 @@ public class ReportEngineHrDecr implements Report {
         StringBuilder text = new StringBuilder();
         text.append("Name; Salary;")
                 .append(System.lineSeparator());
-        for (Employee employee : store.findBy(filter)) {
+        List<Employee> employeeList = store.findBy(filter);
+        Collections.sort(employeeList, new  SortEmployeeSalary());
+        for (Employee employee : employeeList) {
             text.append(employee.getName()).append(";")
                     .append(employee.getSalary()).append(";")
                     .append(System.lineSeparator());

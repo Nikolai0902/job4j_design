@@ -3,7 +3,7 @@ package design.srp;
 import java.util.Calendar;
 import java.util.Objects;
 
-public class Employee implements Comparable<Employee> {
+public class Employee {
 
     private String name;
     private Calendar hired;
@@ -50,11 +50,6 @@ public class Employee implements Comparable<Employee> {
     }
 
     @Override
-    public int compareTo(Employee another) {
-        return Integer.compare((int) another.salary, (int) salary);
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -70,6 +65,4 @@ public class Employee implements Comparable<Employee> {
     public int hashCode() {
         return Objects.hash(name);
     }
-
-
 }

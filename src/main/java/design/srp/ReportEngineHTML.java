@@ -16,15 +16,31 @@ public class ReportEngineHTML implements Report {
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-        text.append(String.format("<%s>", "Name, Hired, Fired, Salary"))
-                .append(System.lineSeparator());
-        for (Employee employee : store.findBy(filter)) {
-            text.append(String.format("<%s>", employee.getName()))
-                    .append(String.format("<%s>", employee.getHired().getTime()))
-                    .append(String.format("<%s>", employee.getFired().getTime()))
-                    .append(String.format("<%s>", employee.getSalary()))
+        text.append("<!DOCTYPE HTML>")
+                .append(System.lineSeparator())
+                .append("<html>").append(System.lineSeparator())
+                .append("<head>").append(System.lineSeparator())
+                .append("<meta http-equiv=\"Сontent-Type\" content=\"text/html; cgarser")
+                .append(System.lineSeparator())
+                .append("<title>Таблица</title>")
+                .append(System.lineSeparator())
+                .append("</head>").append(System.lineSeparator())
+                .append("<body>").append(System.lineSeparator())
+                .append("<table>").append(System.lineSeparator())
+                .append("<tr>").append(System.lineSeparator())
+                .append("<th>Name</th><th>Hired</th><th>Fired</th><th>Salary</th>")
+                .append(System.lineSeparator())
+                .append("<tr>").append(System.lineSeparator());
+    for (Employee employee : store.findBy(filter)) {
+            text.append("<td>").append(employee.getName()).append("</td>")
+                    .append("<td>").append(employee.getHired()).append("</td>")
+                    .append("<td>").append(employee.getFired()).append("</td>")
+                    .append("<td>").append(employee.getSalary()).append("</td>")
                     .append(System.lineSeparator());
         }
+    text.append("</table>").append(System.lineSeparator())
+            .append("</body>").append(System.lineSeparator())
+            .append("</html>").append(System.lineSeparator());
         return text.toString();
     }
 }

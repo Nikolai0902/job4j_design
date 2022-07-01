@@ -8,6 +8,8 @@ import static design.srp.ReportEngine.DATE_FORMAT;
  */
 public class ReportEngineSalaryDollar implements Report {
 
+    public static final int COURSE = 50;
+
     private Store store;
 
     public ReportEngineSalaryDollar(Store store) {
@@ -23,7 +25,7 @@ public class ReportEngineSalaryDollar implements Report {
             text.append(employee.getName()).append(";")
                     .append(DATE_FORMAT.format(employee.getHired().getTime())).append(";")
                     .append(DATE_FORMAT.format(employee.getFired().getTime())).append(";")
-                    .append("Американский доллар: ").append(employee.getSalary() / 50).append(";")
+                    .append("Американский доллар: ").append(employee.getSalary() / COURSE).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
