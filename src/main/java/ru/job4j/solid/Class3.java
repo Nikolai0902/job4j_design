@@ -6,10 +6,6 @@ import ru.job4j.question.User;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Шаблон проектирования, который нарушает SRP.
- * Преобразование в формат есть преобразование, которое может поменяться.
- */
 public class Class3 {
 
     public String printFormat(List<User> list) {
