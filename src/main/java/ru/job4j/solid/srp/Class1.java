@@ -1,4 +1,4 @@
-package ru.job4j.solid;
+package ru.job4j.solid.srp;
 
 import ru.job4j.question.User;
 

@@ -1,14 +1,13 @@
-package ru.job4j.solid;
+package ru.job4j.solid.srp;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.Objects;
 
 /**
  * Модель данных с лишней логикой.
  * метод userSerialization нарушает SRP.
  */
-public class User implements Serializable {
+public class User {
     private String name;
     private String surname;
     private int id;
@@ -70,11 +69,5 @@ public class User implements Serializable {
     }
 
     public static void userSerialization(User user) throws IOException {
-        File tempFile = Files.createTempFile(null, null).toFile();
-        try (FileOutputStream fos = new FileOutputStream(tempFile);
-             ObjectOutputStream oos =
-                     new ObjectOutputStream(fos)) {
-            oos.writeObject(user);
-        }
     }
 }
