@@ -1,4 +1,8 @@
-package design.srp;
+package ru.job4j.design.srp;
+
+import ru.job4j.design.sorting.SortEmployeeSalary;
+import ru.job4j.design.storage.Employee;
+import ru.job4j.design.storage.Store;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +25,7 @@ public class ReportEngineHrDecr implements Report {
         text.append("Name; Salary;")
                 .append(System.lineSeparator());
         List<Employee> employeeList = store.findBy(filter);
-        Collections.sort(employeeList, new  SortEmployeeSalary());
+        Collections.sort(employeeList, new SortEmployeeSalary());
         for (Employee employee : employeeList) {
             text.append(employee.getName()).append(";")
                     .append(employee.getSalary()).append(";")

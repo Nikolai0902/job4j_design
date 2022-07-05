@@ -1,7 +1,9 @@
-package design.srp;
+package ru.job4j.design.srp;
+
+import ru.job4j.design.storage.Employee;
+import ru.job4j.design.storage.Store;
 
 import java.util.function.Predicate;
-import static design.srp.ReportEngine.DATE_FORMAT;
 
 /**
  * Система отчетов для отдела бугалтерии в долларах(Изменен вид зарплаты).
@@ -23,8 +25,8 @@ public class ReportEngineSalaryDollar implements Report {
                 .append(System.lineSeparator());
         for (Employee employee : store.findBy(filter)) {
             text.append(employee.getName()).append(";")
-                    .append(DATE_FORMAT.format(employee.getHired().getTime())).append(";")
-                    .append(DATE_FORMAT.format(employee.getFired().getTime())).append(";")
+                    .append(ReportEngine.DATE_FORMAT.format(employee.getHired().getTime())).append(";")
+                    .append(ReportEngine.DATE_FORMAT.format(employee.getFired().getTime())).append(";")
                     .append("Американский доллар: ").append(employee.getSalary() / COURSE).append(";")
                     .append(System.lineSeparator());
         }

@@ -1,4 +1,7 @@
-package design.srp;
+package ru.job4j.design.srp;
+
+import ru.job4j.design.storage.Employee;
+import ru.job4j.design.storage.Store;
 
 import java.text.SimpleDateFormat;
 import java.util.function.Predicate;

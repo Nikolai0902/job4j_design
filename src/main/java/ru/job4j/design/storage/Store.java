@@ -1,4 +1,6 @@
-package design.srp;
+package ru.job4j.design.storage;
+
+import ru.job4j.design.storage.Employee;
 
 import java.util.List;
 import java.util.function.Predicate;

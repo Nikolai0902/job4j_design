@@ -1,4 +1,6 @@
-package design.srp;
+package ru.job4j.design.sorting;
+
+import ru.job4j.design.storage.Employee;
 
 import java.util.Comparator;
 

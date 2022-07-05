@@ -1,4 +1,4 @@
-package design.srp;
+package ru.job4j.design.storage;
 
 import java.util.ArrayList;
 import java.util.List;
