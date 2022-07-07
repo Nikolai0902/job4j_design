@@ -1,12 +1,25 @@
 package ru.job4j.parking;
 
-import ru.job4j.collection.list.List;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ParkingCar implements Parking {
 
-    @Override
-    public void add(Car car) {
+    public int lotNormal;
+    public int lotBig;
 
+    public final List<Car> placeNormal = new ArrayList<>();
+    public final List<Car> placeBig = new ArrayList<>();
+
+    public ParkingCar(int lotNormal, int lotBig) {
+        this.lotNormal = lotNormal;
+        this.lotBig = lotBig;
+    }
+
+    @Override
+    public boolean add(Car car) {
+        return false;
     }
 
     @Override
