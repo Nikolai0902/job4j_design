@@ -9,12 +9,12 @@ public class TODOApp {
     private final static int EXIT = 0;
     private final static int ADD_TASK = 1;
     private final static int SHOW_ALL_TASKS = 2;
+    public static final String SEP = System.lineSeparator();
 
-    private final static String ACTIONS = """
-                Выберите действие:
-                0. Выход
-                1. Добавить задачу
-                2. Показать задачи""";
+    private final static String ACTIONS = "Выберите действие: " + SEP
+            + "0. Выход" + SEP
+            + "1. Добавить задачу" + SEP
+            + "2. Показать задачи" + SEP;
 
     public TODOApp(Menu menu) {
         this.menu = menu;
