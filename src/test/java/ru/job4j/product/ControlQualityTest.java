@@ -24,83 +24,89 @@ public class ControlQualityTest {
 
     @Test
     public void testWhenMilkShop() {
-        List<Store> actions = List.of(new Warehouse(), new Shop(), new Trash());
-        List<Food> foods = List.of(
-                new Milk("молоко", LocalDate.now().plusDays(5), LocalDate.now().minusDays(5), 100, 10)
-        );
-        List<Food> expect = List.of(
-                new Milk("молоко", LocalDate.now().plusDays(5), LocalDate.now().minusDays(5), 100, 10)
-        );
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Milk milk = new Milk("молоко", LocalDate.now().plusDays(5), LocalDate.now().minusDays(5), 100, 10);
+        List<Food> foods = List.of(milk);
         new ControlQuality(actions).distribution(foods);
-        assertThat(actions.get(1).findAll(), is(expect));
+        assertThat(shop.findAll(), is(List.of(milk)));
     }
 
     @Test
     public void testWhenShopOver75() {
-        List<Store> actions = List.of(new Warehouse(), new Shop(), new Trash());
-        Date nowDate = new Date(2000, Calendar.MAY, 9);
-        List<Food> foods = List.of(
-                new Milk("молоко",
-                        LocalDate.now().plusDays(1), LocalDate.now().minusDays(9), 100, 10)
-        );
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Milk milk = new Milk("молоко", LocalDate.now().plusDays(1), LocalDate.now().minusDays(9), 90, 10);
+        List<Food> foods = List.of(milk);
         new ControlQuality(actions).distribution(foods);
-        List<Food> expect = List.of(
-                new Milk("молоко", LocalDate.now().plusDays(1), LocalDate.now().minusDays(9), 90, 10)
-        );
-        assertThat(actions.get(1).findAll(), is(expect));
+        assertThat(shop.findAll(), is(List.of(milk)));
     }
 
     @Test
     public void testWhenShopFrutis75() {
-        List<Store> actions = List.of(new Warehouse(), new Shop(), new Trash());
-        Date nowDate = new Date(2000, Calendar.MAY, 9);
-        List<Food> foods = List.of(
-                new Fruits("арбуз",
-                        LocalDate.now().plusDays(4), LocalDate.now().minusDays(12), 100, 10)
-        );
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Fruits fruits = new Fruits("арбуз", LocalDate.now().plusDays(4), LocalDate.now().minusDays(12), 90, 10);
+        List<Food> foods = List.of(fruits);
         new ControlQuality(actions).distribution(foods);
-        List<Food> expect = List.of(
-                new Fruits("арбуз", LocalDate.now().plusDays(4), LocalDate.now().minusDays(12), 90, 10)
-        );
-        assertThat(actions.get(1).findAll(), is(expect));
+        assertThat(shop.findAll(), is(List.of(fruits)));
     }
 
     @Test
     public void testWhenWarehouse() {
-        List<Store> actions = List.of(new Warehouse(), new Shop(), new Trash());
-        Date nowDate = new Date(2000, Calendar.MAY, 9);
-        List<Food> foods = List.of(
-                new Fruits("банан",
-                        LocalDate.now().plusDays(10), LocalDate.now().minusDays(1), 100, 10)
-        );
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Fruits fruits = new Fruits("банан", LocalDate.now().plusDays(10), LocalDate.now().minusDays(1), 100, 10);
+        List<Food> foods = List.of(fruits);
         new ControlQuality(actions).distribution(foods);
-        List<Food> expect = List.of(
-                new Fruits("банан", LocalDate.now().plusDays(10), LocalDate.now().minusDays(1), 100, 10)
-        );
-        assertThat(actions.get(0).findAll(), is(expect));
+        assertThat(warehouse.findAll(), is(List.of(fruits)));
     }
 
     @Test
     public void testWhenTrash() {
-        List<Store> actions = List.of(new Warehouse(), new Shop(), new Trash());
-        List<Food> foods = List.of(
-                new Fruits("банан",
-                        LocalDate.now().plusDays(0), LocalDate.now().minusDays(10), 100, 10)
-        );
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Fruits fruits = new Fruits("банан", LocalDate.now().plusDays(0), LocalDate.now().minusDays(10), 100, 10);
+        List<Food> foods = List.of(fruits);
         new ControlQuality(actions).distribution(foods);
-        List<Food> expect = List.of(
-                new Fruits("банан", LocalDate.now().plusDays(0), LocalDate.now().minusDays(10), 100, 10)
-        );
-        assertThat(actions.get(2).findAll(), is(expect));
+        assertThat(trash.findAll(), is(List.of(fruits)));
     }
 
     @Test (expected = IllegalArgumentException.class)
     public void testWhenEx() {
-        List<Store> actions = List.of(new Warehouse(), new Shop(), new Trash());
-        List<Food> foods = List.of(
-                new Fruits("банан",
-                        LocalDate.now().minusDays(10), LocalDate.now().plusDays(10), 100, 10)
-        );
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Fruits fruits = new Fruits("банан",
+                LocalDate.now().minusDays(10), LocalDate.now().plusDays(10), 100, 10);
+        new ControlQuality(actions).distribution(List.of(fruits));
+    }
+
+    @Test
+    public void testWhenTrashWarehouseShop() {
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Milk milk = new Milk("молоко", LocalDate.now().plusDays(5), LocalDate.now().minusDays(5), 100, 10);
+        Milk cheese = new Milk("сыр", LocalDate.now().plusDays(1), LocalDate.now().minusDays(9), 90, 10);
+        Fruits fruits = new Fruits("банан", LocalDate.now().plusDays(0), LocalDate.now().minusDays(10), 100, 10);
+        Fruits apple = new Fruits("яблоко", LocalDate.now().plusDays(10), LocalDate.now().minusDays(1), 100, 10);
+        List<Food> foods = List.of(fruits, milk, cheese, apple);
         new ControlQuality(actions).distribution(foods);
+        assertThat(shop.findAll(), is(List.of(milk, cheese)));
+        assertThat(trash.findAll(), is(List.of(fruits)));
+        assertThat(warehouse.findAll(), is(List.of(apple)));
     }
 }

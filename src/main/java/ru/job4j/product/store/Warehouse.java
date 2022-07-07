@@ -5,8 +5,7 @@ import ru.job4j.product.foood.Food;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.job4j.product.MyValues.VALUE1;
-import static ru.job4j.product.MyValues.VALUE3;
+import static ru.job4j.product.MyValues.PERCENT_FOR_WAREHOUSE;
 
 public class Warehouse implements Store {
 
@@ -15,7 +14,7 @@ public class Warehouse implements Store {
     @Override
     public boolean accept(Food food) {
         int percent = getPercentLifeExpired(food);
-        return percent < VALUE1;
+        return percent < PERCENT_FOR_WAREHOUSE;
     }
 
     @Override
@@ -27,11 +26,6 @@ public class Warehouse implements Store {
 
     @Override
     public List<Food> findAll() {
-        List<Food> rsl = new ArrayList<>();
-        for (Food row : list) {
-            rsl.add(row);
-
-        }
-        return rsl;
+        return new ArrayList<>(list);
     }
 }

@@ -5,8 +5,8 @@ public final class MyValues {
     private MyValues() {
     }
 
-    public static final int VALUE1 = 25;
-    public static final int VALUE2 = 75;
-    public static final int VALUE3 = 100;
+    public static final int PERCENT_FOR_WAREHOUSE = 25;
+    public static final int PERCENT_FOR_SHOP = 75;
+    public static final int PERCENT_FOR_TRASH = 100;
 
 }

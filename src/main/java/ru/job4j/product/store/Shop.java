@@ -14,7 +14,8 @@ public class Shop implements Store {
     public boolean accept(Food food) {
         boolean result = false;
         int percent = getPercentLifeExpired(food);
-        if (percent >= VALUE1 && percent < VALUE2 || percent >= VALUE2 && percent < VALUE3) {
+        if (percent >= PERCENT_FOR_WAREHOUSE && percent < PERCENT_FOR_SHOP
+                || percent >= PERCENT_FOR_SHOP && percent < PERCENT_FOR_TRASH) {
             result = true;
         }
         return result;
@@ -24,7 +25,7 @@ public class Shop implements Store {
     public void add(Food food) {
         if (accept(food)) {
             int percent = getPercentLifeExpired(food);
-            if (percent >= VALUE2 && percent < VALUE3) {
+            if (percent >= PERCENT_FOR_SHOP && percent < PERCENT_FOR_TRASH) {
                 int priceOld = food.getPrice();
                 int discount = food.getDiscount();
                 food.setPrice(priceOld - (priceOld * discount / 100));

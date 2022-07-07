@@ -7,11 +7,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public interface Store {
-    public void add(Food food);
-    public List<Food> findAll();
+    void add(Food food);
+    List<Food> findAll();
     boolean accept(Food food);
 
-    public default int getPercentLifeExpired(Food food) {
+    default int getPercentLifeExpired(Food food) {
         int percent = 0;
         LocalDate now = LocalDate.now();
         LocalDate crDate = food.getCreateDate();

@@ -14,7 +14,7 @@ public class Trash implements Store {
     @Override
     public boolean accept(Food food) {
         int percent = getPercentLifeExpired(food);
-        return percent >= VALUE3;
+        return percent >= PERCENT_FOR_TRASH;
     }
 
     @Override
