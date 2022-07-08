@@ -4,7 +4,7 @@ public class SimpleMenuPrinter implements MenuPrinter {
     public static final String INDENT = "----";
     public static final String SEP = System.lineSeparator();
 
-    StringBuilder builderTest = new StringBuilder();
+    private final StringBuilder builderTest = new StringBuilder();
 
     @Override
     public void print(Menu menu) {

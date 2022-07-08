@@ -24,13 +24,9 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        Optional<MenuItemInfo> rsl = Optional.empty();
         Optional<ItemInfo> itemInfo = findItem(itemName);
-        if (itemInfo.isPresent()) {
-            rsl = Optional.of(new MenuItemInfo(itemInfo.get().menuItem,
-                    itemInfo.get().number));
-        }
-        return rsl;
+        return findItem(itemName).map(s -> new MenuItemInfo(itemInfo.get().menuItem,
+                itemInfo.get().number));
     }
 
     private Optional<ItemInfo> findItem(String name) {
@@ -40,6 +36,7 @@ public class SimpleMenu implements Menu {
             ItemInfo info = infoIterator.next();
             if (info.menuItem.getName().equals(name)) {
                 rsl = Optional.of(info);
+                break;
             }
         }
         return rsl;
@@ -57,9 +54,6 @@ public class SimpleMenu implements Menu {
 
             @Override
             public MenuItemInfo next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
                 ItemInfo itemInfo = infoIterator.next();
                 return new MenuItemInfo(itemInfo.menuItem, itemInfo.number);
             }
