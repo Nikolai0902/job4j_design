@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface Parking {
 
-    public boolean add(Car car);
-    public List<Car> findAll();
+    boolean add(Car car);
+    List<Car> findAll();
 }

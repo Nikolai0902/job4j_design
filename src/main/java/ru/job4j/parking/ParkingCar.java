@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static ru.job4j.parking.NormalAuto.AUTO_SIZE;
+
 
 public class ParkingCar implements Parking {
 
@@ -12,6 +14,14 @@ public class ParkingCar implements Parking {
 
     public List<Car> placeBig;
     public List<Car> placeNormal;
+
+    public List<Car> getPlaceBig() {
+        return placeBig;
+    }
+
+    public List<Car> getPlaceNormal() {
+        return placeNormal;
+    }
 
     public ParkingCar(int lotNormal, int lotBig) {
         this.lotNormal = lotNormal;
@@ -23,17 +33,15 @@ public class ParkingCar implements Parking {
     @Override
     public boolean add(Car car) {
         boolean result = false;
-        if (car.getSize() == 1 && placeNormal.size() < lotNormal) {
+        if (car.getSize() == AUTO_SIZE && placeNormal.size() < lotNormal) {
             placeNormal.add(car);
             result = true;
-        } else if (car.getSize() > 1 && placeBig.size() < lotBig) {
+        } else if (car.getSize() > AUTO_SIZE && placeBig.size() < lotBig) {
             placeBig.add(car);
             result = true;
-        } else if (car.getSize() > 1 && placeBig.size() == lotBig && (lotNormal - placeNormal.size()) >= car.getSize()) {
-            int i = 1;
-            while (i <= car.getSize()) {
-                placeNormal.add(new NormalAuto());
-                i++;
+        } else if (car.getSize() > AUTO_SIZE && placeBig.size() == lotBig && (lotNormal - placeNormal.size()) >= car.getSize()) {
+            for (int j = 1; j <= car.getSize(); j++) {
+                placeNormal.add(car);
                 result = true;
             }
         }
@@ -42,6 +50,9 @@ public class ParkingCar implements Parking {
 
     @Override
     public List<Car> findAll() {
-        return null;
+        List<Car> result = new ArrayList<>();
+        result.addAll(getPlaceNormal());
+        result.addAll(getPlaceBig());
+        return result;
     }
 }
