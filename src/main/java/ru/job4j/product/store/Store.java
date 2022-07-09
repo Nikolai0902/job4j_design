@@ -10,6 +10,7 @@ public interface Store {
     void add(Food food);
     List<Food> findAll();
     boolean accept(Food food);
+    public void clear();
 
     default int getPercentLifeExpired(Food food) {
         int percent = 0;

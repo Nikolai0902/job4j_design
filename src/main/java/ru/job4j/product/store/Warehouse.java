@@ -28,4 +28,8 @@ public class Warehouse implements Store {
     public List<Food> findAll() {
         return new ArrayList<>(list);
     }
+
+    public void clear() {
+        list.clear();
+    }
 }

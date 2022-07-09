@@ -3,6 +3,7 @@ package ru.job4j.product;
 import ru.job4j.product.foood.Food;
 import ru.job4j.product.store.Store;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlQuality {
@@ -21,5 +22,12 @@ public class ControlQuality {
                 }
             }
         }
+    }
+
+    public void resort() {
+        List<Food> newList = new ArrayList<>();
+        actions.forEach(s -> newList.addAll(s.findAll()));
+        actions.forEach(Store::clear);
+        distribution(newList);
     }
 }

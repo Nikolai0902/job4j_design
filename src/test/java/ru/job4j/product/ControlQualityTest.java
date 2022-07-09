@@ -109,4 +109,18 @@ public class ControlQualityTest {
         assertThat(trash.findAll(), is(List.of(fruits)));
         assertThat(warehouse.findAll(), is(List.of(apple)));
     }
+
+    @Test
+    public void testWhenMilkShopResort() {
+        Warehouse warehouse = new Warehouse();
+        Shop shop = new Shop();
+        Trash trash = new Trash();
+        List<Store> actions = List.of(warehouse, shop, trash);
+        Milk milk = new Milk("молоко", LocalDate.now().plusDays(5), LocalDate.now().minusDays(5), 100, 10);
+        List<Food> foods = List.of(milk);
+        ControlQuality controlQuality = new ControlQuality(actions);
+        controlQuality.distribution(foods);
+        controlQuality.resort();
+        assertThat(shop.findAll(), is(List.of(milk)));
+    }
 }
