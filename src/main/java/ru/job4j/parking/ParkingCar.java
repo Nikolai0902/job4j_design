@@ -1,11 +1,9 @@
 package ru.job4j.parking;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static ru.job4j.parking.NormalAuto.AUTO_SIZE;
-
 
 public class ParkingCar implements Parking {
 
@@ -16,11 +14,11 @@ public class ParkingCar implements Parking {
     public List<Car> placeNormal;
 
     public List<Car> getPlaceBig() {
-        return placeBig;
+        return new ArrayList<>(placeBig);
     }
 
     public List<Car> getPlaceNormal() {
-        return placeNormal;
+        return new ArrayList<>(placeNormal);
     }
 
     public ParkingCar(int lotNormal, int lotBig) {
