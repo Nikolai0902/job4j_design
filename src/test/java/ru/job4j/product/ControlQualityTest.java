@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
 public class ControlQualityTest {
 
     @Test
-    public void testWhenMilkShop() {
+    public void whenMilkGoShop() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();
@@ -35,7 +35,7 @@ public class ControlQualityTest {
     }
 
     @Test
-    public void testWhenShopOver75() {
+    public void whenMilkGoShopDateOver75() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();
@@ -47,7 +47,7 @@ public class ControlQualityTest {
     }
 
     @Test
-    public void testWhenShopFrutis75() {
+    public void whenFruitsGoShopDateEqual75() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();
@@ -59,7 +59,7 @@ public class ControlQualityTest {
     }
 
     @Test
-    public void testWhenWarehouse() {
+    public void whenFruitsGoWarehouse() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();
@@ -71,7 +71,7 @@ public class ControlQualityTest {
     }
 
     @Test
-    public void testWhenTrash() {
+    public void whenFruitsGoTrash() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();
@@ -83,7 +83,7 @@ public class ControlQualityTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void testWhenEx() {
+    public void whenException() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();
@@ -94,7 +94,7 @@ public class ControlQualityTest {
     }
 
     @Test
-    public void testWhenTrashWarehouseShop() {
+    public void whenFoodGoTrashWarehouseShop() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();
@@ -111,7 +111,7 @@ public class ControlQualityTest {
     }
 
     @Test
-    public void testWhenMilkShopResort() {
+    public void whenResortFood() {
         Warehouse warehouse = new Warehouse();
         Shop shop = new Shop();
         Trash trash = new Trash();

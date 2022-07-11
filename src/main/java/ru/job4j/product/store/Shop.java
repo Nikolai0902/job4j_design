@@ -22,8 +22,9 @@ public class Shop implements Store {
     }
 
     @Override
-    public void add(Food food) {
-        if (accept(food)) {
+    public boolean add(Food food) {
+        boolean result = accept(food);
+        if (result) {
             int percent = getPercentLifeExpired(food);
             if (percent >= PERCENT_FOR_SHOP && percent < PERCENT_FOR_TRASH) {
                 int priceOld = food.getPrice();
@@ -32,6 +33,7 @@ public class Shop implements Store {
             }
             list.add(food);
         }
+        return result;
     }
 
     @Override

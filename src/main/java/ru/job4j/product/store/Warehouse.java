@@ -18,10 +18,12 @@ public class Warehouse implements Store {
     }
 
     @Override
-    public void add(Food food) {
-        if (accept(food)) {
+    public boolean add(Food food) {
+        boolean result = accept(food);
+        if (result) {
             list.add(food);
         }
+        return result;
     }
 
     @Override

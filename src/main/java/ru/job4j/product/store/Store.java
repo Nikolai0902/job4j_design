@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public interface Store {
-    void add(Food food);
+    boolean add(Food food);
     List<Food> findAll();
     boolean accept(Food food);
     public void clear();
