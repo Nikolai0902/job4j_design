@@ -4,7 +4,9 @@ import ru.job4j.collection.list.List;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
+/**
+ * Модель данных с лишней логикой.
+ */
 public class Class2 {
     protected String load(String key) {
         String result = null;
